@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.StoreFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <EditText
+            android:id="@+id/input_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:background="@color/transparent"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:padding="5dp"
+            tools:ignore="LabelFor" />
+
+        <ImageView
+            android:id="@+id/delete_tvSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/ic_delete" />
+
+    </LinearLayout>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/teal_200"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btnAll"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:text="@string/btnAll"
+                android:textAlignment="center"
+                android:textColor="@color/custom_btn_frag1"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/btnVegetables"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:text="@string/btnVegetables"
+                android:textAlignment="center"
+                android:textColor="@color/custom_btn_frag1"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/btnMeat"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:text="@string/btnMeat"
+                android:textAlignment="center"
+                android:textColor="@color/custom_btn_frag1"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/btnFlower"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:text="@string/btnFlower"
+                android:textAlignment="center"
+                android:textColor="@color/custom_btn_frag1"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+    </HorizontalScrollView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" />
+
+</LinearLayout>

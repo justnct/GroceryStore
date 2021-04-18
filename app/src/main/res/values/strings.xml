@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">GroceryStore</string>
+    <string name="day">Day</string>
+    <string name="night">Night</string>
+    <string name="sologan_at_login_1">Grocery Store</string>
+    <string name="sologan_at_login_2">Happy To Service You</string>
+    <string name="account">Username</string>
+    <string name="pass">Password</string>
+    <string name="re_pass">Enter the password</string>
+    <string name="email">Email</string>
+    <string name="login">LogIn</string>
+    <string name="tv_register_login">You dont have account ?? Create now bae</string>
+    <string name="messenger_warning_empty_field">Do not leave this field blank</string>
+    <string name="slogan_at_register_1">SignUp now to using app</string>
+    <string name="btn_register">Register</string>
+    <string name="tv_from_register_backto_login">Back to LogIn</string>
+    <string name="messenger_warning_notmatch_pass_and_repass">The entered passwords do not match. Try again.</string>
+    <string name="messenger_warning_exist_username">This account already exists</string>
+    <string name="messenger_warning_exist_email">This email already register</string>
+    <string name="messenger_warning_wrong_infor">Wrong information</string>
+    <string name="messenger_warning_logged">This account is being logged in</string>
+    <string name="navi_view_store">Store</string>
+    <string name="navi_view_cart">Cart</string>
+    <string name="navi_view_information">Information</string>
+    <string name="name_product">Name: </string>
+    <string name="amount_product">Amount: </string>
+    <string name="money_product">Money: </string>
+    <string name="price_product">Price: </string>
+    <string name="price_1kg">/kg </string>
+    <string name="accept_add_Cart">Add To Cart </string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="tutorial_1">This is app for order food</string>
+    <string name="how_to_play">Food come home</string>
+    <string name="btn_get_start">Using app</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btnAll">All</string>
+    <string name="btnMeat">Meat</string>
+    <string name="btnVegetables">Vegetables</string>
+    <string name="btnFlower">Flower</string>
+    <string name="search">Search...</string>
+    <string name="total_product">Total: </string>
+    <string name="pay">PAY</string>
+    <string name="list_product_of_customer">List Product</string>
+
+</resources>
