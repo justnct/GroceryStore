@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.model.Account;
 import com.example.pj_grocerystore.model.Internet;
+import com.example.pj_grocerystore.shared_preference.DataLocalManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -38,10 +39,9 @@ public class LogInActivity extends AppCompatActivity {
     private TextInputLayout inputLayout_username, inputLayout_password;
     private TextInputEditText editText_username, editText_password;
     private Button btn_LogIn;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private SharedPreferences sharedPreferences;
-    private Context context = this ;
+    private Context context = this;
     private Intent intent;
 
     @Override
@@ -75,6 +75,7 @@ public class LogInActivity extends AppCompatActivity {
                     if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
                         inputLayout_username.setError(null);
                         inputLayout_password.setError(null);
+                        //check
                         databaseReference = FirebaseDatabase.getInstance().getReference("Account");
                         //Need CONTINUE
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,20 +87,20 @@ public class LogInActivity extends AppCompatActivity {
                                     boolean pass = false;
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                         if (dataSnapshot.getValue(Account.class).getUsername().equals(username) &&
-                                                dataSnapshot.getValue(Account.class).getPassword().equals(password) &&
-                                                dataSnapshot.getValue(Account.class).getIsActive() == 0) {
-                                            pass = true;
-                                            Account account1 = new Account(username, password, dataSnapshot.getValue(Account.class).getEmail(), 1, 0);
-                                            databaseReference.child(username).setValue(account1);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("Username", username);
-                                            editor.putString("Email", dataSnapshot.getValue(Account.class).getEmail());
-                                            editor.apply();
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            String messenger_warning = getResources().getString(R.string.messenger_warning_logged);
-                                            Toast.makeText(context, "" + messenger_warning, Toast.LENGTH_SHORT).show();
+                                                dataSnapshot.getValue(Account.class).getPassword().equals(password)) {
+                                            if (dataSnapshot.getValue(Account.class).getIsActive() == 0) {
+                                                pass = true;
+                                                Account account1 = new Account(username, password, dataSnapshot.getValue(Account.class).getEmail(), 1, 0);
+                                                databaseReference.child(username).setValue(account1);
+                                                DataLocalManager.setStrng("Username", username);
+                                                DataLocalManager.setStrng("Email", dataSnapshot.getValue(Account.class).getEmail());
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                pass = true;
+                                                String messenger_warning = getResources().getString(R.string.messenger_warning_logged);
+                                                Toast.makeText(context, "" + messenger_warning, Toast.LENGTH_SHORT).show();
+                                            }
                                         }
                                     }
                                     if (!pass) {
@@ -115,7 +116,6 @@ public class LogInActivity extends AppCompatActivity {
 
                             }
                         });
-
                     }
                 }
             }
@@ -147,7 +147,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void checkLogged() {
-        if(sharedPreferences.contains("Username")){
+        if (DataLocalManager.checkExitst("Username")) {
             startActivity(intent);
             finish();
         }

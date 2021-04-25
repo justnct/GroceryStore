@@ -1,9 +1,10 @@
 package com.example.pj_grocerystore.adapter;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.activity.IntroduceAppActivity;
 import com.example.pj_grocerystore.activity.LogInActivity;
+import com.example.pj_grocerystore.fragment.CartFragment;
 import com.example.pj_grocerystore.model.Account;
 import com.example.pj_grocerystore.model.ChoiceOfInformation;
+import com.example.pj_grocerystore.shared_preference.DataLocalManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -83,8 +89,7 @@ public class ListChoiceOfInformationFragmentAdapter extends BaseAdapter {
 
                 switch (listChoice.get(position).getTitle1()){
                     case "LogOut":
-                        SharedPreferences sharedPref = context.getSharedPreferences("Account", Context.MODE_PRIVATE);
-                        String username = sharedPref.getString("Username","");
+                        String username = DataLocalManager.getString("Username");
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Account");
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -93,10 +98,8 @@ public class ListChoiceOfInformationFragmentAdapter extends BaseAdapter {
                                     if(dataSnapshot.getValue(Account.class).getUsername().equals(username)){
                                         Account account1 = new Account(username, dataSnapshot.getValue(Account.class).getPassword(), dataSnapshot.getValue(Account.class).getEmail(), 0, 0);
                                         databaseReference.child(username).setValue(account1);
-                                        SharedPreferences.Editor editor = sharedPref.edit();
-                                        editor.remove("Username");
-                                        editor.remove("Email");
-                                        editor.apply();
+                                        DataLocalManager.removeKey("Username");
+                                        DataLocalManager.removeKey("Email");
                                         Intent i = new Intent(context, LogInActivity.class);
                                         context.startActivity(i);
                                         ((Activity)context).finish();
@@ -115,6 +118,9 @@ public class ListChoiceOfInformationFragmentAdapter extends BaseAdapter {
                     case "Introduce":
                         Intent i = new Intent(context, IntroduceAppActivity.class);
                         context.startActivity(i);
+                        break;
+                    case "History":
+                        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new CartFragment()).commit();
                         break;
                 }
             }

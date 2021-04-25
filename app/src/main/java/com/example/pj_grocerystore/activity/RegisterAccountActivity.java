@@ -33,6 +33,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
     private Button btn_register;
     private ArrayList<TextInputLayout> listInputLayout;
     private ArrayList<TextInputEditText> listEditText;
+    private Intent backToLogin;
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -78,10 +79,12 @@ public class RegisterAccountActivity extends AppCompatActivity {
                             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    int count = 0;
                                     if (snapshot.getChildrenCount() == 0) {
                                         Account account1 = new Account(username, password, email, 0, 0);
                                         databaseReference.child(username).setValue(account1);
                                         Toast.makeText(RegisterAccountActivity.this, "Tạo tài khoản thành công :3", Toast.LENGTH_SHORT).show();
+                                        startActivity(backToLogin);
                                     } else {
                                         for (DataSnapshot data : snapshot.getChildren()) {
                                             //username not exist
@@ -89,9 +92,14 @@ public class RegisterAccountActivity extends AppCompatActivity {
                                                 //check email exist
                                                 //email not exist
                                                 if (!Objects.requireNonNull(data.getValue(Account.class)).getEmail().equals(email)) {
-                                                    Account account1 = new Account(username, password, email, 0, 0);
-                                                    databaseReference.child(username).setValue(account1);
-                                                    Toast.makeText(RegisterAccountActivity.this, "Tạo tài khoản thành công :3", Toast.LENGTH_SHORT).show();
+                                                    count++;
+                                                    if(count == snapshot.getChildrenCount()){ //email haven't been register
+                                                        Account account1 = new Account(username, password, email, 0, 0);
+                                                        databaseReference.child(username).setValue(account1);
+                                                        Toast.makeText(RegisterAccountActivity.this, "Tạo tài khoản thành công :3", Toast.LENGTH_SHORT).show();
+                                                        startActivity(backToLogin);
+                                                        finish();
+                                                    }
                                                 } else {
                                                     //email exist
                                                     String messenger_warning = getResources().getString(R.string.messenger_warning_exist_email);
@@ -130,8 +138,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
         tv_backToLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RegisterAccountActivity.this, LogInActivity.class);
-                startActivity(i);
+                startActivity(backToLogin);
             }
         });
 
@@ -164,6 +171,7 @@ public class RegisterAccountActivity extends AppCompatActivity {
         listEditText.add(editText_password2_register);
         listEditText.add(editText_email_register);
 
+        backToLogin = new Intent(RegisterAccountActivity.this, LogInActivity.class);
 
     }
 

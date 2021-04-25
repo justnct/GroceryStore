@@ -72,7 +72,7 @@ public class ListProductOfCustomerAdapter extends BaseAdapter {
         viewHolder.tv_name.setText(productList.get(position).getName());
         viewHolder.tv_price.setText(FormatNumber.formatNumber(productList.get(position).getPrice()));
         viewHolder.tv_amount.setText(String.valueOf(productList.get(position).getAmount()));
-        viewHolder.tv_total.setText(String.valueOf(productList.get(position).getTotal()));
+        viewHolder.tv_total.setText(FormatNumber.formatNumber(productList.get(position).getTotal()));
         viewHolder.img_deleteProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

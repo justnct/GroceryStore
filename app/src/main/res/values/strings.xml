@@ -33,6 +33,8 @@
     <string name="tutorial_1">This is app for order food</string>
     <string name="how_to_play">Food come home</string>
     <string name="btn_get_start">Using app</string>
+    <string name="channel_name">Your order has been confirmed</string>
+    <string name="channel_description">We will deliver goods within 60 minutes</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListProductOfCustomer {
-    private static List<DetailsProduct> detailsProductList = new ArrayList<>();
+    private static ArrayList<DetailsProduct> detailsProductList = new ArrayList<>();
 
-    public static List<DetailsProduct> getDetailsProductList() {
+    public static ArrayList<DetailsProduct> getDetailsProductList() {
         return detailsProductList;
     }
 
@@ -22,7 +22,7 @@ public class ListProductOfCustomer {
         } else {
             //cart have item
             boolean pass = false;
-            for (int i = 0; i< detailsProductList.size(); i++) {
+            for (int i = 0; i < detailsProductList.size(); i++) {
                 //buy more
                 if (detailsProductList.get(i).getName().equals(product.getName())) {
                     DetailsProduct newProduct = null;

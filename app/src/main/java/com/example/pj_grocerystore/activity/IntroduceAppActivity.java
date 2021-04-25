@@ -19,13 +19,14 @@ public class IntroduceAppActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private ViewPagerAdapter_Tutorial viewPagerAdapter_tutorial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduce_app);
         //declare
         tv_next = (TextView) findViewById(R.id.next_introduce_game);
-        tv_skip = (TextView) findViewById(R.id.skip_introduce_game);
+        tv_skip = (TextView) findViewById(R.id.skip_introduce_game_abc);
         viewPager = (ViewPager) findViewById(R.id.viewPager_introduceGame);
         circleIndicator = (CircleIndicator) findViewById(R.id.circle_indicator);
         viewPagerAdapter_tutorial = new ViewPagerAdapter_Tutorial(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -40,10 +41,10 @@ public class IntroduceAppActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 1){
+                if (position == viewPagerAdapter_tutorial.getCount() - 1) {
                     tv_skip.setVisibility(View.GONE);
                     tv_next.setVisibility(View.GONE);
-                }else {
+                } else {
                     tv_skip.setVisibility(View.VISIBLE);
                     tv_next.setVisibility(View.VISIBLE);
                 }
@@ -58,17 +59,17 @@ public class IntroduceAppActivity extends AppCompatActivity {
         tv_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setCurrentItem(1);
+                Toast.makeText(IntroduceAppActivity.this, "" + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
             }
         });
 
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(viewPager.getCurrentItem() < 1){
+                if (viewPager.getCurrentItem() < viewPagerAdapter_tutorial.getCount() - 1) {
                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                 }
             }
         });
     }
-    }
+}

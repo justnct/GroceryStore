@@ -7,7 +7,7 @@
     tools:context=".activity.IntroduceAppActivity">
 
     <TextView
-        android:id="@+id/skip_introduce_game"
+        android:id="@+id/skip_introduce_game_abc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

@@ -3,13 +3,15 @@
     package="com.example.pj_grocerystore">
 
     <application
+        android:name=".model.ChannelNotification"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PJ_GroceryStore">
-        <activity android:name=".activity.IntroduceAppActivity"></activity>
+        <activity android:name=".activity.TransHistoryActivity"></activity>
+        <activity android:name=".activity.IntroduceAppActivity" />
         <activity android:name=".activity.ProductDetails" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.RegisterAccountActivity" />
