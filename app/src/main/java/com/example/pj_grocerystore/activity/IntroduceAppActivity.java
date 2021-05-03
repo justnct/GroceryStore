@@ -59,7 +59,7 @@ public class IntroduceAppActivity extends AppCompatActivity {
         tv_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(IntroduceAppActivity.this, "" + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IntroduceAppActivity.this, "" + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -17,6 +17,8 @@ public class ChannelNotification extends Application {
         createNotificationChannel();
         DataLocalManager.init(getApplicationContext());
     }
+
+    
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library

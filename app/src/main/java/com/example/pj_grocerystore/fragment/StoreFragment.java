@@ -90,6 +90,8 @@ public class StoreFragment extends Fragment {
                 filter(input_Search.getText().toString());
             }
         });
+
+
         input_Search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

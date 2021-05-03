@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PJ_GroceryStore">
-        <activity android:name=".activity.TransHistoryActivity"></activity>
+        <activity android:name=".activity.ShowHistoryTrans"></activity>
+        <activity android:name=".activity.TransHistoryActivity" />
         <activity android:name=".activity.IntroduceAppActivity" />
         <activity android:name=".activity.ProductDetails" />
         <activity android:name=".activity.MainActivity" />

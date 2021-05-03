@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.activity.IntroduceAppActivity;
 import com.example.pj_grocerystore.activity.LogInActivity;
+import com.example.pj_grocerystore.activity.ShowHistoryTrans;
 import com.example.pj_grocerystore.fragment.CartFragment;
 import com.example.pj_grocerystore.model.Account;
 import com.example.pj_grocerystore.model.ChoiceOfInformation;
@@ -120,7 +121,8 @@ public class ListChoiceOfInformationFragmentAdapter extends BaseAdapter {
                         context.startActivity(i);
                         break;
                     case "History":
-                        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new CartFragment()).commit();
+                        Intent intend = new Intent(context, ShowHistoryTrans.class);
+                        context.startActivity(intend);
                         break;
                 }
             }

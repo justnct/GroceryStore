@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +26,7 @@ import com.example.pj_grocerystore.model.Product;
 
 public class ProductDetails extends AppCompatActivity {
     private ImageView img_product;
-    private TextView tv_nameProduct, tv_priceProduct, tv_amountProduct, tv_totalMoney;
+    private TextView tv_nameProduct, tv_priceProduct, tv_totalMoney, tv_back;
     private Button btn_addCart;
     private EditText et_amountProduct;
     private int amount = 1;
@@ -51,6 +53,29 @@ public class ProductDetails extends AppCompatActivity {
         et_amountProduct.setText(String.valueOf(amount));
         tv_totalMoney.setText(FormatNumber.formatNumber(product.getPrice()));
 
+        et_amountProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (et_amountProduct.getText().toString().equals("")) {
+                    tv_totalMoney.setText(FormatNumber.formatNumber(product.getPrice()));
+                } else {
+                    tv_totalMoney.setText(FormatNumber.formatNumber(Integer.valueOf(
+                            String.valueOf(
+                                    et_amountProduct.getText())) * product.getPrice()));
+                }
+            }
+        });
+
 
         btn_addCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +93,14 @@ public class ProductDetails extends AppCompatActivity {
             }
         });
 
-
+        tv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProductDetails.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     private void addUI() {
@@ -78,6 +110,7 @@ public class ProductDetails extends AppCompatActivity {
         et_amountProduct = findViewById(R.id.tv_amount);
         tv_totalMoney = findViewById(R.id.tv_totalMoney);
         btn_addCart = findViewById(R.id.btn_addCart);
+        tv_back = findViewById(R.id.tv_backToStoreFragment);
 
     }
 }
