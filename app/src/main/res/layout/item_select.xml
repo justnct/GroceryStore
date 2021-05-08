@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_gray">
+    android:background="@drawable/bg_spinner_choice_day_history_trans">
 
     <TextView
         android:id="@+id/tv_selected"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
         android:layout_toStartOf="@+id/img_drop_down"
         android:padding="10dp"
         android:textColor="@color/black"
