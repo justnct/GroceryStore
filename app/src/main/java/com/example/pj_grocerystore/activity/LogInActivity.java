@@ -23,7 +23,9 @@ import android.widget.Toast;
 
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.model.Account;
+import com.example.pj_grocerystore.model.CustomToast;
 import com.example.pj_grocerystore.model.Internet;
+import com.example.pj_grocerystore.model.MD5;
 import com.example.pj_grocerystore.shared_preference.DataLocalManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -58,7 +60,7 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!Internet.isNetworkAvailable(LogInActivity.this)) {
-                    Toast.makeText(LogInActivity.this, "You need Internet to LogIn", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(LogInActivity.this, "You need Internet to LogIn");
                 } else {
                     String username = String.valueOf(editText_username.getText());
                     String password = String.valueOf(editText_password.getText());
@@ -82,24 +84,25 @@ public class LogInActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.getChildrenCount() == 0) {
-                                    Toast.makeText(LogInActivity.this, "Sai thông tin !", Toast.LENGTH_SHORT).show();
+                                    CustomToast.customToast(LogInActivity.this, "Sai thông tin !");
                                 } else {
                                     boolean pass = false;
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        if (dataSnapshot.getValue(Account.class).getUsername().equals(username) &&
-                                                dataSnapshot.getValue(Account.class).getPassword().equals(password)) {
-                                            if (dataSnapshot.getValue(Account.class).getIsActive() == 0) {
+                                        Account test = dataSnapshot.getValue(Account.class);
+                                        if (test.getUsername().equals(username) &&
+                                                test.getPassword().equals(MD5.getMd5(password))) {
+                                            if (test.getIsActive() == 0) {
                                                 pass = true;
-                                                Account account1 = new Account(username, password, dataSnapshot.getValue(Account.class).getEmail(), 1, 0);
-                                                databaseReference.child(username).setValue(account1);
+                                                test.setIsActive(1);
+                                                databaseReference.child(username).setValue(test);
                                                 DataLocalManager.setStrng("Username", username);
-                                                DataLocalManager.setStrng("Email", dataSnapshot.getValue(Account.class).getEmail());
+                                                DataLocalManager.setStrng("Email", test.getEmail());
                                                 startActivity(intent);
                                                 finish();
                                             } else {
                                                 pass = true;
                                                 String messenger_warning = getResources().getString(R.string.messenger_warning_logged);
-                                                Toast.makeText(context, "" + messenger_warning, Toast.LENGTH_SHORT).show();
+                                                CustomToast.customToast(LogInActivity.this, messenger_warning);
                                             }
                                         }
                                     }

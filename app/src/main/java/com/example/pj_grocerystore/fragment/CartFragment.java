@@ -18,10 +18,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.pj_grocerystore.R;
+import com.example.pj_grocerystore.activity.RegisterAccountActivity;
 import com.example.pj_grocerystore.adapter.ListProductOfCustomerAdapter;
 import com.example.pj_grocerystore.controller.PushNotification;
 import com.example.pj_grocerystore.controller.PushOrder;
 import com.example.pj_grocerystore.model.ChannelNotification;
+import com.example.pj_grocerystore.model.CustomToast;
 import com.example.pj_grocerystore.model.DetailsProduct;
 import com.example.pj_grocerystore.model.Internet;
 import com.example.pj_grocerystore.model.ListProductOfCustomer;
@@ -62,7 +64,7 @@ public class CartFragment extends Fragment {
                         ListProductOfCustomer.cleanProduct();
                         listProductOfCustomerAdapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(getActivity(), "You are need Internet", Toast.LENGTH_SHORT).show();
+                        CustomToast.customToast(getActivity(), "You are need Internet");
                     }
                 }
             }

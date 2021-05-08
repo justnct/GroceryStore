@@ -16,7 +16,7 @@ import com.example.pj_grocerystore.model.TextTime;
 
 import java.util.List;
 
-public class SpinnerAdapter extends ArrayAdapter {
+public class SpinnerAdapter extends ArrayAdapter<TextTime> {
 
     public SpinnerAdapter(@NonNull Context context, int resource, @NonNull List objects) {
         super(context, resource, objects);

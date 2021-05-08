@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.model.Account;
+import com.example.pj_grocerystore.model.CustomToast;
+import com.example.pj_grocerystore.model.MD5;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -81,9 +83,9 @@ public class RegisterAccountActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     int count = 0;
                                     if (snapshot.getChildrenCount() == 0) {
-                                        Account account1 = new Account(username, password, email, 0, 0);
+                                        Account account1 = new Account(username, MD5.getMd5(password), email, 0, 0);
                                         databaseReference.child(username).setValue(account1);
-                                        Toast.makeText(RegisterAccountActivity.this, "Tạo tài khoản thành công :3", Toast.LENGTH_SHORT).show();
+                                        CustomToast.customToast(RegisterAccountActivity.this, "Tạo tài khoản thành công :3");
                                         startActivity(backToLogin);
                                     } else {
                                         for (DataSnapshot data : snapshot.getChildren()) {
@@ -94,9 +96,9 @@ public class RegisterAccountActivity extends AppCompatActivity {
                                                 if (!Objects.requireNonNull(data.getValue(Account.class)).getEmail().equals(email)) {
                                                     count++;
                                                     if(count == snapshot.getChildrenCount()){ //email haven't been register
-                                                        Account account1 = new Account(username, password, email, 0, 0);
+                                                        Account account1 = new Account(username, MD5.getMd5(password), email, 0, 0);
                                                         databaseReference.child(username).setValue(account1);
-                                                        Toast.makeText(RegisterAccountActivity.this, "Tạo tài khoản thành công :3", Toast.LENGTH_SHORT).show();
+                                                        CustomToast.customToast(RegisterAccountActivity.this, "Tạo tài khoản thành công :3");
                                                         startActivity(backToLogin);
                                                         finish();
                                                     }

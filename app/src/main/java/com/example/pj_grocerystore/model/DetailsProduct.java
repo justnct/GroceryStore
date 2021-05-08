@@ -13,6 +13,9 @@ public class DetailsProduct {
         this.total = total;
     }
 
+    public DetailsProduct(){}
+
+
     public String getName() {
         return name;
     }
