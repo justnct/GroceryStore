@@ -2,6 +2,9 @@ package com.example.pj_grocerystore.shared_preference;
 
 import android.content.Context;
 
+import com.example.pj_grocerystore.model.Account;
+import com.google.gson.Gson;
+
 public class DataLocalManager {
     private static  DataLocalManager instance;
     private  SharedPreference sharedPreference;
@@ -42,4 +45,17 @@ public class DataLocalManager {
         DataLocalManager.getInstance().sharedPreference.remove(key);
     }
 
-}
+    public static void setAccount(String key, Account account){
+        Gson gson = new Gson();
+        String strGsonAccount = gson.toJson(account);
+        DataLocalManager.getInstance().sharedPreference.putString(key, strGsonAccount);
+    }
+
+    public static Account getAccount(String key) {
+        String strJsonAccount = DataLocalManager.getInstance().sharedPreference.getStringValue(key);
+        Gson gson = new Gson();
+        Account account = gson.fromJson(strJsonAccount, Account.class);
+        return account;
+    }
+
+    }

@@ -90,17 +90,17 @@ public class ListChoiceOfInformationFragmentAdapter extends BaseAdapter {
 
                 switch (listChoice.get(position).getTitle1()){
                     case "LogOut":
-                        String username = DataLocalManager.getString("Username");
+                        String username = DataLocalManager.getAccount("Account").getUsername();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Account");
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                    if(dataSnapshot.getValue(Account.class).getUsername().equals(username)){
-                                        Account account1 = new Account(username, dataSnapshot.getValue(Account.class).getPassword(), dataSnapshot.getValue(Account.class).getEmail(), 0, 0);
-                                        databaseReference.child(username).setValue(account1);
-                                        DataLocalManager.removeKey("Username");
-                                        DataLocalManager.removeKey("Email");
+                                    Account test = dataSnapshot.getValue(Account.class);
+                                    if(test.getUsername().equals(username)){
+                                        test.setIsActive(0);
+                                        databaseReference.child(username).setValue(test);
+                                        DataLocalManager.removeKey("Account");
                                         Intent i = new Intent(context, LogInActivity.class);
                                         context.startActivity(i);
                                         ((Activity)context).finish();

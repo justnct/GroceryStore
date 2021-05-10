@@ -31,8 +31,8 @@ public class InformationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_information, container, false);
         addUI(view);
-        tv_username.setText("Hi," + DataLocalManager.getString("Username"));
-        tv_email.setText(DataLocalManager.getString("Email"));
+        tv_username.setText("Hi," + DataLocalManager.getAccount("Account").getUsername());
+        tv_email.setText(DataLocalManager.getAccount("Account").getEmail());
         return view;
     }
 

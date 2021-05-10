@@ -97,9 +97,8 @@ public class LogInActivity extends AppCompatActivity {
                                                 test.setIsActive(1);
                                                 databaseReference.child(username).setValue(test);
                                                 DataLocalManager.setStrng("Username", test.getUsername());
-                                                DataLocalManager.setStrng("Username1", test.getUsername());
                                                 DataLocalManager.setStrng("Password", password);
-                                                DataLocalManager.setStrng("Email", test.getEmail());
+                                                DataLocalManager.setAccount("Account", test);
                                                 checkRememberMe();
                                                 startActivity(intent);
                                                 finish();
@@ -142,7 +141,7 @@ public class LogInActivity extends AppCompatActivity {
             DataLocalManager.setBoolean("remember_me", true);
         } else {
             DataLocalManager.removeKey("remember_me");
-            DataLocalManager.removeKey("Username1");
+            DataLocalManager.removeKey("Username");
             DataLocalManager.removeKey("Password");
         }
     }

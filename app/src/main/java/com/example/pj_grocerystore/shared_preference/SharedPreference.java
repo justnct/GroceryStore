@@ -58,4 +58,6 @@ public class SharedPreference {
         editor.remove(key);
         editor.apply();
     }
+
+
 }
