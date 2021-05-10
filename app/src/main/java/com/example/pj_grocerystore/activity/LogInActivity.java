@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,9 +43,9 @@ public class LogInActivity extends AppCompatActivity {
     private TextInputEditText editText_username, editText_password;
     private Button btn_LogIn;
     private DatabaseReference databaseReference;
-    private SharedPreferences sharedPreferences;
     private Context context = this;
     private Intent intent;
+    private CheckBox cb_rememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +96,11 @@ public class LogInActivity extends AppCompatActivity {
                                                 pass = true;
                                                 test.setIsActive(1);
                                                 databaseReference.child(username).setValue(test);
-                                                DataLocalManager.setStrng("Username", username);
+                                                DataLocalManager.setStrng("Username", test.getUsername());
+                                                DataLocalManager.setStrng("Username1", test.getUsername());
+                                                DataLocalManager.setStrng("Password", password);
                                                 DataLocalManager.setStrng("Email", test.getEmail());
+                                                checkRememberMe();
                                                 startActivity(intent);
                                                 finish();
                                             } else {
@@ -133,6 +137,16 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
+    private void checkRememberMe() {
+        if(cb_rememberMe.isChecked()){
+            DataLocalManager.setBoolean("remember_me", true);
+        } else {
+            DataLocalManager.removeKey("remember_me");
+            DataLocalManager.removeKey("Username1");
+            DataLocalManager.removeKey("Password");
+        }
+    }
+
 
     private void addUI() {
         //declare
@@ -145,8 +159,14 @@ public class LogInActivity extends AppCompatActivity {
         editText_username = findViewById(R.id.editText_username);
         editText_password = findViewById(R.id.editText_password);
         btn_LogIn = findViewById(R.id.btn_logIn);
-        sharedPreferences = context.getSharedPreferences("Account", Context.MODE_PRIVATE);
         intent = new Intent(LogInActivity.this, MainActivity.class);
+        cb_rememberMe = findViewById(R.id.checkbox_remember_me);
+
+        if (DataLocalManager.checkExitst("remember_me")){
+            editText_username.setText(DataLocalManager.getString("Username1"));
+            editText_password.setText(DataLocalManager.getString("Password"));
+            cb_rememberMe.setChecked(true);
+        }
     }
 
     private void checkLogged() {

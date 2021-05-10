@@ -25,6 +25,15 @@ public class DataLocalManager {
         return DataLocalManager.getInstance().sharedPreference.getStringValue(key);
     }
 
+    public static void setBoolean(String key, boolean value){
+        DataLocalManager.getInstance().sharedPreference.putBoolean(key, value);
+    }
+
+    public static void getBoolean(String key){
+        DataLocalManager.getInstance().sharedPreference.getBooleanValue(key);
+    }
+
+
     public static boolean checkExitst(String key){
         return DataLocalManager.getInstance().sharedPreference.contains(key);
     }

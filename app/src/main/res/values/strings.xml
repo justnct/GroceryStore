@@ -35,6 +35,8 @@
     <string name="btn_get_start">Using app</string>
     <string name="channel_name">Your order has been confirmed</string>
     <string name="channel_description">We will deliver goods within 60 minutes</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forgot_pass">Forgot Pass ???</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
