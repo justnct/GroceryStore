@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pj_grocerystore">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".model.ChannelNotification"
         android:allowBackup="true"

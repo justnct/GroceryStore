@@ -5,6 +5,8 @@
     android:layout_marginTop="1dp"
     android:baselineAligned="true"
     android:orientation="horizontal"
+    android:background="@drawable/bg_spinner_choice_day_history_trans"
+    android:layout_marginBottom="6dp"
     android:weightSum="2">
 
     <LinearLayout

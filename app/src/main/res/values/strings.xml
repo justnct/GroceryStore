@@ -37,6 +37,11 @@
     <string name="channel_description">We will deliver goods within 60 minutes</string>
     <string name="remember_me">Remember Me</string>
     <string name="forgot_pass">Forgot Pass ???</string>
+    <string name="total_order">Total Order</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="cancel">CANCEL</string>
+    <string name="place_of_receipt">Place Of Receipt</string>
+    <string name="list_name_product">Purchased Product:</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

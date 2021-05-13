@@ -48,4 +48,23 @@ public class ListProductOfCustomer {
     public static void removeProduct(DetailsProduct product) {
         detailsProductList.remove(product);
     }
+
+    public static String getListNameProduct() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < detailsProductList.size(); i++) {
+            DetailsProduct detailsProduct = detailsProductList.get(i);
+            stringBuilder.append("\n");
+            stringBuilder.append(detailsProduct.getName());
+        }
+        return stringBuilder.toString();
+    }
+
+    public static double getTotalMoney() {
+        double total = 0;
+        for (int i = 0; i < detailsProductList.size(); i++) {
+            DetailsProduct detailsProduct = detailsProductList.get(i);
+            total += detailsProduct.getTotal();
+        }
+        return total;
+    }
 }

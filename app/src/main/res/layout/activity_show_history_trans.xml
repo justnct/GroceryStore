@@ -13,7 +13,7 @@
         android:layout_margin="10dp"
         android:layout_marginStart="15dp"
         android:textSize="22sp"
-        android:textStyle="bold"
+        android:fontFamily="monospace"
         android:text="SELECT DAY ORDER"
         android:textAlignment="center" />
 
@@ -29,6 +29,8 @@
     <ListView
         android:id="@+id/show_list_history_trans"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="2dp"/>
 
 </LinearLayout>

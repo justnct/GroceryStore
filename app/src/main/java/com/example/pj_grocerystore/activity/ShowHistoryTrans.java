@@ -9,14 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.adapter.ListViewProductHistoryTransAdapter;
 import com.example.pj_grocerystore.adapter.SpinnerAdapter;
 import com.example.pj_grocerystore.model.DetailsProduct;
-import com.example.pj_grocerystore.model.getListHistoryTrans;
+import com.example.pj_grocerystore.model.GetListHistoryTrans;
 import com.example.pj_grocerystore.shared_preference.DataLocalManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,7 +76,7 @@ public class ShowHistoryTrans extends AppCompatActivity {
 
     private void addUI() {
         spinner = findViewById(R.id.spinner);
-        spinnerAdapter = new SpinnerAdapter(this, R.layout.item_select, getListHistoryTrans.getListTimeOrder(context));
+        spinnerAdapter = new SpinnerAdapter(this, R.layout.item_select, GetListHistoryTrans.getListTimeOrder(context));
         spinner.setAdapter(spinnerAdapter);
         listView = findViewById(R.id.show_list_history_trans);
     }

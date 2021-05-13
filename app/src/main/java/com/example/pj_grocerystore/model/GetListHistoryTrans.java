@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class getListHistoryTrans {
+public class GetListHistoryTrans {
     public static ArrayList<TextTime> getListTimeOrder(Context context){
         ArrayList<TextTime> list = new ArrayList<>();
         ArrayList<DetailsProduct> list2 = new ArrayList<>();

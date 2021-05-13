@@ -10,4 +10,11 @@ public class FormatNumber {
         String str1 = currencyVN.format(number);
         return  str1;
     }
+
+    public static String formatNumberDouble(double number){
+        Locale localeVN = new Locale("vi", "VN");
+        NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+        String str1 = currencyVN.format(number);
+        return  str1;
+    }
 }

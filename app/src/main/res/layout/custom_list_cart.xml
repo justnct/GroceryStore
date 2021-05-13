@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="1dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_spinner_choice_day_history_trans"
     android:baselineAligned="true"
     android:orientation="horizontal"
     android:weightSum="5">

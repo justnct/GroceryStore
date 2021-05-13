@@ -15,25 +15,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.activity.RegisterAccountActivity;
 import com.example.pj_grocerystore.adapter.ListProductOfCustomerAdapter;
+import com.example.pj_grocerystore.adapter.SpinnerAdapter;
+import com.example.pj_grocerystore.adapter.SpinnerCityAdapter;
 import com.example.pj_grocerystore.controller.PushNotification;
 import com.example.pj_grocerystore.controller.PushOrder;
 import com.example.pj_grocerystore.model.ChannelNotification;
+import com.example.pj_grocerystore.model.City;
 import com.example.pj_grocerystore.model.CustomToast;
 import com.example.pj_grocerystore.model.DetailsProduct;
+import com.example.pj_grocerystore.model.FormatNumber;
 import com.example.pj_grocerystore.model.Internet;
 import com.example.pj_grocerystore.model.ListProductOfCustomer;
+import com.example.pj_grocerystore.model.MyBottomSheetDialogFragment;
+import com.example.pj_grocerystore.model.TextTime;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 public class CartFragment extends Fragment {
     private ListView lv_item_customer;
-    private ListProductOfCustomerAdapter listProductOfCustomerAdapter;
+    private static ListProductOfCustomerAdapter listProductOfCustomerAdapter;
     private Button btn_pay;
 
     public CartFragment() {
@@ -53,16 +64,7 @@ public class CartFragment extends Fragment {
             public void onClick(View v) {
                 if (!ListProductOfCustomer.getDetailsProductList().isEmpty()) {
                     if (Internet.isNetworkAvailable(getContext())) {
-                        for (int i = 0; i < ListProductOfCustomer.getDetailsProductList().size(); i++) {
-                            DetailsProduct detailsProduct = ListProductOfCustomer.getDetailsProductList().get(i);
-                            PushOrder.push(getContext(), i, detailsProduct);
-                        }
-                        //send notification
-                        String title1 = "ORDER SUCCESS";
-                        String title2 = "We will bring food for u !";
-                        PushNotification.PushNotificationInFragment(getResources(), getContext(), getActivity(), title1, title2);
-                        ListProductOfCustomer.cleanProduct();
-                        listProductOfCustomerAdapter.notifyDataSetChanged();
+                        openBottomSheetDialog();
                     } else {
                         CustomToast.customToast(getActivity(), "You are need Internet");
                     }
@@ -78,5 +80,19 @@ public class CartFragment extends Fragment {
         btn_pay = view.findViewById(R.id.pay);
         listProductOfCustomerAdapter = new ListProductOfCustomerAdapter(getContext(), R.layout.custom_list_cart, ListProductOfCustomer.getDetailsProductList());
     }
+
+    private void openBottomSheetDialog() {
+        MyBottomSheetDialogFragment myBottomSheetDialogFragment = MyBottomSheetDialogFragment.newInstance();
+        assert getFragmentManager() != null;
+        myBottomSheetDialogFragment.show(getFragmentManager(), myBottomSheetDialogFragment.getTag());
+        myBottomSheetDialogFragment.setCancelable(false);
+    }
+
+    public static void setState(){
+        listProductOfCustomerAdapter.notifyDataSetChanged();
+    }
+
+
+
 
 }
