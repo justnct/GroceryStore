@@ -1,12 +1,14 @@
 package com.example.pj_grocerystore.model;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,13 +32,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment {
+    private static Context context1;
     private TextView tv_listNameProduct, tv_totalMoney;
     private Button btnCancel, btnConfirm;
     private Spinner spinnerCity;
     private SpinnerCityAdapter spinnerCityAdapter;
 
-    public static MyBottomSheetDialogFragment newInstance() {
+    public static MyBottomSheetDialogFragment newInstance(Context context) {
         MyBottomSheetDialogFragment myBottomSheetDialogFragment = new MyBottomSheetDialogFragment();
+        context1 = context;
         return myBottomSheetDialogFragment;
     }
 
@@ -100,13 +104,14 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 if (listCity1 != null) {
                     for (int i = 0; i < listCity1.getLtsItem().size(); i++) {
                         listCity.add(new City(listCity1.getLtsItem().get(i).getTitle()));
+                        Toast.makeText(context1, "Fail", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ListCity> call, Throwable t) {
-
+                Toast.makeText(context1, "Fail", Toast.LENGTH_SHORT).show();
             }
         });
         return listCity;

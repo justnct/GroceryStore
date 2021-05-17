@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="6dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_spinner_choice_day_history_trans"
     android:baselineAligned="true"
     android:orientation="horizontal"
@@ -12,7 +10,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:layout_weight="2"
         android:orientation="vertical"
         android:padding="5dp">
@@ -20,6 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
             <TextView
@@ -44,6 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="5dp"
                 android:text="@string/price_product" />
 
@@ -51,6 +51,7 @@
                 android:id="@+id/price_product_customer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="2dp" />
 
         </LinearLayout>
@@ -109,7 +110,7 @@
         android:id="@+id/detele_item_cart"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:src="@drawable/delete_item" />
 

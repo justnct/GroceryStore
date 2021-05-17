@@ -169,7 +169,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void checkLogged() {
-        if (DataLocalManager.checkExitst("Username")) {
+        if (DataLocalManager.checkExitst("Account")) {
             startActivity(intent);
             finish();
         }

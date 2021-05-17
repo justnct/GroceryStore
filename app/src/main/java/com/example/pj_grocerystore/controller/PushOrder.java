@@ -30,9 +30,7 @@ public class PushOrder {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long count = snapshot.child(DataLocalManager.getString("Username")).getChildrenCount() + 1;
-                TextTime textTime = new TextTime(String.valueOf(count));
-                databaseReference.child(DataLocalManager.getString("Username"))
+                databaseReference.child(DataLocalManager.getAccount("Account").getUsername())
                         .child(date)
                         .child("Product " + (number + 1))
                         .setValue(product);

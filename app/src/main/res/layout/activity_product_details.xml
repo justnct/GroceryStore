@@ -7,7 +7,7 @@
     tools:context=".activity.ProductDetails">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -31,7 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_nameDetailProduct"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:textAlignment="center" />
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -67,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -79,7 +82,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:inputType="number" />
+                android:inputType="number"
+                />
 
         </LinearLayout>
 
@@ -88,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -105,11 +110,12 @@
 
         <Button
             android:id="@+id/btn_addCart"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custom_btn_login"
-            android:text="@string/accept_add_Cart" />
+            android:text="@string/accept_add_Cart"
+            android:textColor="@color/pink" />
 
         <TextView
             android:id="@+id/tv_backToStoreFragment"
@@ -120,7 +126,7 @@
             android:text="@string/tv_back"
             android:textAlignment="center"
             android:textColor="@color/blue"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>

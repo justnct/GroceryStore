@@ -55,7 +55,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_username"
                 android:layout_width="250dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:maxLength="20"
                 android:textSize="16sp" />
 
@@ -74,7 +74,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText_password"
                 android:layout_width="250dp"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:textSize="16sp" />
@@ -110,13 +110,15 @@
 
         <Button
             android:id="@+id/btn_logIn"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:layout_marginTop="5dp"
             android:background="@drawable/custom_btn_login"
             android:fontFamily="monospace"
             android:text="@string/login"
-            android:textColor="@color/pink" />
+            android:textColor="@color/pink"
+            app:backgroundTint="@null" />
 
         <TextView
             android:id="@+id/tv_registerAccount"
@@ -128,7 +130,8 @@
             android:textAlignment="center"
             android:textColor="@color/blue"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:backgroundTint="@null"/>
 
     </LinearLayout>
 

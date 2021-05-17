@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.example.pj_grocerystore.R;
@@ -42,7 +43,7 @@ public class ShowHistoryTrans extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TransctionHistory")
-                        .child(DataLocalManager.getString("Username"))
+                        .child(DataLocalManager.getAccount("Account").getUsername())
                         .child(spinnerAdapter.getItem(position).getName());
                 ArrayList<DetailsProduct> list = new ArrayList<>();
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

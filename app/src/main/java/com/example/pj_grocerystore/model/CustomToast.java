@@ -19,7 +19,7 @@ public class CustomToast {
         TextView tv_messenger = view.findViewById(R.id.messenger_toast);
         tv_messenger.setText(mess);
         toast.setView(view);
-        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.setGravity(Gravity.BOTTOM, 0, 20);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.show();
     }

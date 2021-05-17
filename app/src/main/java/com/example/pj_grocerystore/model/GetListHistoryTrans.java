@@ -22,7 +22,7 @@ public class GetListHistoryTrans {
         ArrayList<DetailsProduct> list2 = new ArrayList<>();
         list.add(new TextTime("Select day"));
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("TransctionHistory")
-                .child(DataLocalManager.getString("Username"));
+                .child(DataLocalManager.getAccount("Account").getUsername());
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
