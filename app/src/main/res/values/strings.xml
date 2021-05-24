@@ -20,6 +20,7 @@
     <string name="messenger_warning_wrong_infor">Wrong information</string>
     <string name="messenger_warning_logged">This account is being logged in</string>
     <string name="navi_view_store">Store</string>
+    <string name="navi_view_like_is_sell">Like Is Sell</string>
     <string name="navi_view_cart">Cart</string>
     <string name="navi_view_information">Information</string>
     <string name="name_product">Name: </string>

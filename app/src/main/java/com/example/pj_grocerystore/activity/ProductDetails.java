@@ -1,12 +1,8 @@
 package com.example.pj_grocerystore.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,15 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pj_grocerystore.R;
-import com.example.pj_grocerystore.fragment.CartFragment;
-import com.example.pj_grocerystore.fragment.StoreFragment;
 import com.example.pj_grocerystore.model.DetailsProduct;
 import com.example.pj_grocerystore.model.FormatNumber;
 import com.example.pj_grocerystore.model.ListProductOfCustomer;
 import com.example.pj_grocerystore.model.Product;
+import com.example.pj_grocerystore.model.ProductTest;
 
 public class ProductDetails extends AppCompatActivity {
     private ImageView img_product;
@@ -43,15 +39,25 @@ public class ProductDetails extends AppCompatActivity {
 
         //getIntent fromproductdetail
         Intent i = getIntent();
-        product = (Product) i.getParcelableExtra("product");
-        position = i.getIntExtra("position", 0);
-
-
-        tv_nameProduct.setText(product.getName());
-        tv_priceProduct.setText(FormatNumber.formatNumber(product.getPrice()));
-        img_product.setImageResource(product.getImage());
-        et_amountProduct.setText(String.valueOf(amount));
-        tv_totalMoney.setText(FormatNumber.formatNumber(product.getPrice()));
+        //from cart fragment
+        if(i.getParcelableExtra("product") != null) {
+            product = (Product) i.getParcelableExtra("product");
+            position = i.getIntExtra("position", 0);
+            tv_nameProduct.setText(product.getName());
+            tv_priceProduct.setText(FormatNumber.formatNumber(product.getPrice()));
+            img_product.setImageResource(product.getImage());
+            et_amountProduct.setText(String.valueOf(amount));
+            tv_totalMoney.setText(FormatNumber.formatNumber(product.getPrice()));
+        } else {
+            //from thichthiban
+            ProductTest productTest = i.getParcelableExtra("productLike");
+            position = i.getIntExtra("positionLike", 0);
+            tv_nameProduct.setText(productTest.getName());
+            tv_priceProduct.setText(FormatNumber.formatNumber(productTest.getPrice()));
+//            img_product.setImageResource();
+            et_amountProduct.setText(String.valueOf(amount));
+            tv_totalMoney.setText(FormatNumber.formatNumber(productTest.getPrice()));
+        }
 
         et_amountProduct.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,9 +75,8 @@ public class ProductDetails extends AppCompatActivity {
                 if (et_amountProduct.getText().toString().equals("")) {
                     tv_totalMoney.setText(FormatNumber.formatNumber(product.getPrice()));
                 } else {
-                    tv_totalMoney.setText(FormatNumber.formatNumber(Integer.valueOf(
-                            String.valueOf(
-                                    et_amountProduct.getText())) * product.getPrice()));
+                    tv_totalMoney.setText(FormatNumber.formatNumber(Integer.parseInt(et_amountProduct.getText().toString())
+                            * product.getPrice()));
                 }
             }
         });
@@ -81,7 +86,7 @@ public class ProductDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(et_amountProduct.getText())) {
-                    amount = Integer.valueOf(String.valueOf(et_amountProduct.getText()));
+                    amount = Integer.parseInt(et_amountProduct.getText().toString());
                 } else {
                     amount = 1;
                 }

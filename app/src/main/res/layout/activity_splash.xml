@@ -10,6 +10,7 @@
     tools:context=".activity.SplashActivity">
 
     <ImageView
+        android:id="@+id/haha"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:contentDescription="TODO"

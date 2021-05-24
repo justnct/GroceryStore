@@ -14,18 +14,20 @@ public class BR_Internet extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Internet.isNetworkAvailable(context)) {
-            if (!DataLocalManager.checkExitst("Username")) {
-                intent = new Intent(context, LogInActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+        if (!Internet.isNetworkAvailable(context)) {
+            //no internet
+            if (!DataLocalManager.checkExitst("Account")) { //not logged in
+                Intent intent1 = new Intent(context, LogInActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent1);
             }
         } else {
-            if (DataLocalManager.checkExitst("Username")) {
+            //have internet
+            if (DataLocalManager.checkExitst("Account")) { //logged
                 intent = new Intent(context, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-            } else {
+            } else {    //not logged in
                 intent = new Intent(context, LogInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

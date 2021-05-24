@@ -8,47 +8,46 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.activity.ProductDetails;
 import com.example.pj_grocerystore.model.FormatNumber;
-import com.example.pj_grocerystore.model.Product;
+import com.example.pj_grocerystore.model.ProductTest;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.productViewHolder> {
-    private ArrayList<Product> mListProduct;
+public class LikeIsSellProductAdapter extends RecyclerView.Adapter<LikeIsSellProductAdapter.LikeIsSellViewHolder> {
+    private ArrayList<ProductTest> mListProduct;
+    private ArrayList<Bitmap> mListBitamp;
 
-    public ProductAdapter(ArrayList<Product> mListProduct) {
+    public LikeIsSellProductAdapter(ArrayList<ProductTest> mListProduct, ArrayList<Bitmap> mListBitamp) {
         this.mListProduct = mListProduct;
+        this.mListBitamp = mListBitamp;
     }
 
     @NonNull
     @Override
-    public productViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LikeIsSellViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_item_product, parent, false);
-        return new productViewHolder(view);
+        return new LikeIsSellViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull productViewHolder holder, int position) {
-        Product product = mListProduct.get(position);
-        holder.img_product.setImageResource(product.getImage());
-        holder.tv_nameProduct.setText(product.getName());
-        holder.tv_priceProduct.setText(FormatNumber.formatNumber(product.getPrice()));
+    public void onBindViewHolder(@NonNull LikeIsSellViewHolder holder, int position) {
+        ProductTest productTest = mListProduct.get(position);
+        holder.tv_nameProduct.setText(productTest.getName());
+        holder.img_product.setImageBitmap(mListBitamp.get(position));
+        holder.tv_priceProduct.setText(FormatNumber.formatNumber(productTest.getPrice()));
         holder.main_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ProductDetails.class);
-                intent.putExtra("product", product);
-                intent.putExtra("position", position);
-//                intent.putExtra("bitmapPic", mListBitmap.get(position));
+                intent.putExtra("productLike", productTest);
+                intent.putExtra("productImageLike", mListBitamp.get(position));
+                intent.putExtra("positionLike", position);
                 v.getContext().startActivity(intent);
             }
         });
@@ -59,17 +58,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.productV
         return mListProduct.size();
     }
 
-    public void filterList(ArrayList<Product> listSearch) {
-        mListProduct = listSearch;
-        notifyDataSetChanged();
-    }
+    public static class LikeIsSellViewHolder extends RecyclerView.ViewHolder{
+        private final ImageView img_product;
+        private final TextView tv_nameProduct;
+        private final TextView tv_priceProduct;
+        private final LinearLayout main_details;
 
-    public class productViewHolder extends RecyclerView.ViewHolder {
-        private ImageView img_product;
-        private TextView tv_nameProduct, tv_priceProduct;
-        private LinearLayout main_details;
-
-        public productViewHolder(@NonNull View itemView) {
+        public LikeIsSellViewHolder(@NonNull View itemView) {
             super(itemView);
             main_details = itemView.findViewById(R.id.main_details);
             img_product = itemView.findViewById(R.id.img_product);

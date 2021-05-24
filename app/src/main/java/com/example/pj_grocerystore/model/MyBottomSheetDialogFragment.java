@@ -38,9 +38,8 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment {
     private Spinner spinnerCity;
     private SpinnerCityAdapter spinnerCityAdapter;
 
-    public static MyBottomSheetDialogFragment newInstance(Context context) {
+    public static MyBottomSheetDialogFragment newInstance() {
         MyBottomSheetDialogFragment myBottomSheetDialogFragment = new MyBottomSheetDialogFragment();
-        context1 = context;
         return myBottomSheetDialogFragment;
     }
 

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "903149614466",
+    "firebase_url": "https://pj-grocerystore-default-rtdb.firebaseio.com",
     "project_id": "pj-grocerystore",
     "storage_bucket": "pj-grocerystore.appspot.com"
   },

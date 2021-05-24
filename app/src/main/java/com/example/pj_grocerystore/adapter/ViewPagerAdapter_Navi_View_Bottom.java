@@ -8,9 +8,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.example.pj_grocerystore.fragment.CartFragment;
 import com.example.pj_grocerystore.fragment.InformationFragment;
 import com.example.pj_grocerystore.fragment.StoreFragment;
+import com.example.pj_grocerystore.fragment.WhatDoYouLikeToSellFragment;
 
 public class ViewPagerAdapter_Navi_View_Bottom extends FragmentStateAdapter {
-    private Fragment fragment = null;
     public ViewPagerAdapter_Navi_View_Bottom(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -20,11 +20,12 @@ public class ViewPagerAdapter_Navi_View_Bottom extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                fragment = new StoreFragment();
-                return fragment;
+                return new StoreFragment();
             case 1:
-                return new CartFragment();
+                return new WhatDoYouLikeToSellFragment();
             case 2:
+                return new CartFragment();
+            case 3:
                 return new InformationFragment();
             default:
                 return new StoreFragment();
@@ -33,6 +34,6 @@ public class ViewPagerAdapter_Navi_View_Bottom extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

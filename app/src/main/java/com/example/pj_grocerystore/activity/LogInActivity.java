@@ -37,8 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LogInActivity extends AppCompatActivity {
-    private RelativeLayout main;
-    private TextView tv_slogan1, tv_slogan2, tv_register;
+    private TextView tv_register;
     private TextInputLayout inputLayout_username, inputLayout_password;
     private TextInputEditText editText_username, editText_password;
     private Button btn_LogIn;
@@ -90,22 +89,30 @@ public class LogInActivity extends AppCompatActivity {
                                     boolean pass = false;
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                         Account test = dataSnapshot.getValue(Account.class);
-                                        if (test.getUsername().equals(username) &&
-                                                test.getPassword().equals(MD5.getMd5(password))) {
-                                            if (test.getIsActive() == 0) {
+                                        if (test.getUsername().equals(username)
+                                                && test.getPassword().equals(MD5.getMd5(password))
+                                                ) {
+                                            if(test.getLevel() == 2){
                                                 pass = true;
-                                                test.setIsActive(1);
-                                                databaseReference.child(username).setValue(test);
-                                                DataLocalManager.setStrng("Username", test.getUsername());
-                                                DataLocalManager.setStrng("Password", password);
-                                                DataLocalManager.setAccount("Account", test);
-                                                checkRememberMe();
-                                                startActivity(intent);
+                                                Intent i = new Intent(LogInActivity.this, AdminActivity.class);
+                                                startActivity(i);
                                                 finish();
                                             } else {
-                                                pass = true;
-                                                String messenger_warning = getResources().getString(R.string.messenger_warning_logged);
-                                                CustomToast.customToast(LogInActivity.this, messenger_warning);
+                                                if (test.getIsActive() == 0) {
+                                                    pass = true;
+                                                    test.setIsActive(1);
+                                                    databaseReference.child(username).setValue(test);
+                                                    DataLocalManager.setStrng("Username", test.getUsername());
+                                                    DataLocalManager.setStrng("Password", password);
+                                                    DataLocalManager.setAccount("Account", test);
+                                                    checkRememberMe();
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    pass = true;
+                                                    String messenger_warning = getResources().getString(R.string.messenger_warning_logged);
+                                                    CustomToast.customToast(LogInActivity.this, messenger_warning);
+                                                }
                                             }
                                         }
                                     }
@@ -149,9 +156,6 @@ public class LogInActivity extends AppCompatActivity {
 
     private void addUI() {
         //declare
-        main = findViewById(R.id.main_logIn);
-        tv_slogan1 = findViewById(R.id.tv_slogan1);
-        tv_slogan2 = findViewById(R.id.tv_slogan2);
         tv_register = findViewById(R.id.tv_registerAccount);
         inputLayout_username = findViewById(R.id.inputLayout_username);
         inputLayout_password = findViewById(R.id.inputLayout_password);

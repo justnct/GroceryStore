@@ -7,6 +7,11 @@
         android:title="@string/navi_view_store" />
 
     <item
+        android:id="@+id/navi_view_something_i_just_want_sell"
+        android:icon="@drawable/ic_store"
+        android:title="@string/navi_view_like_is_sell" />
+
+    <item
         android:id="@+id/navi_view_cart"
         android:icon="@drawable/ic_cart"
         android:title="@string/navi_view_cart" />

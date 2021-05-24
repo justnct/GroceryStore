@@ -1,9 +1,19 @@
 package com.example.pj_grocerystore.shared_preference;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.example.pj_grocerystore.model.Account;
+import com.example.pj_grocerystore.model.ProductTest;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataLocalManager {
     private static  DataLocalManager instance;
@@ -57,5 +67,59 @@ public class DataLocalManager {
         Account account = gson.fromJson(strJsonAccount, Account.class);
         return account;
     }
+
+    public static void setListProductTEST(String key, List<ProductTest> mList){
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.toJsonTree(mList).getAsJsonArray();
+        String strJsonArray = jsonArray.toString();
+        DataLocalManager.getInstance().sharedPreference.putString(key, strJsonArray);
+    }
+
+    public static ArrayList<ProductTest> getListProductTEST(String key) {
+        String strJsonArray = DataLocalManager.getInstance().sharedPreference.getStringValue(key);
+        ArrayList<ProductTest> mList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(strJsonArray);
+            JSONObject jsonObject;
+            ProductTest productTest;
+            Gson gson = new Gson();
+            for (int i = 0 ; i < jsonArray.length(); i++){
+                jsonObject = jsonArray.getJSONObject(i);
+                productTest  = gson.fromJson(jsonObject.toString(), ProductTest.class);
+                mList.add(productTest);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mList;
+    }
+
+    public static void setListBitmap(String key, List<Bitmap> mList){
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.toJsonTree(mList).getAsJsonArray();
+        String strJsonArray = jsonArray.toString();
+        DataLocalManager.getInstance().sharedPreference.putString(key, strJsonArray);
+    }
+
+    public static ArrayList<Bitmap> getListBitmap(String key) {
+        String strJsonArray = DataLocalManager.getInstance().sharedPreference.getStringValue(key);
+        ArrayList<Bitmap> mList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(strJsonArray);
+            JSONObject jsonObject;
+            Bitmap bitmap;
+            Gson gson = new Gson();
+            for (int i = 0 ; i < jsonArray.length(); i++){
+                jsonObject = jsonArray.getJSONObject(i);
+                bitmap  = gson.fromJson(jsonObject.toString(), Bitmap.class);
+                mList.add(bitmap);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mList;
+    }
+
+
 
     }

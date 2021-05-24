@@ -10,15 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 
 import com.example.pj_grocerystore.R;
@@ -27,6 +24,7 @@ import com.example.pj_grocerystore.model.ListData;
 import com.example.pj_grocerystore.model.Product;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class StoreFragment extends Fragment {
@@ -36,7 +34,6 @@ public class StoreFragment extends Fragment {
     private EditText input_Search;
     private int type = 0;
     private ImageView img_deleteInputSearch;
-    private GridLayoutManager gridLayoutManager;
     private Intent intent = null;
 
     public StoreFragment() {
@@ -49,13 +46,13 @@ public class StoreFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_store, container, false);
         addUI(view);
-        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         productAdapter = new ProductAdapter(ListData.getListData(0));
         recyclerView.setAdapter(productAdapter);
 
 
-        if ((intent = getActivity().getIntent()) != null) {
+        if ((intent = Objects.requireNonNull(getActivity()).getIntent()) != null) {
             int current = intent.getIntExtra("currentProduct",0);
             gridLayoutManager.scrollToPositionWithOffset(current,0);
         }
@@ -141,4 +138,5 @@ public class StoreFragment extends Fragment {
         input_Search = view.findViewById(R.id.input_search);
         img_deleteInputSearch = view.findViewById(R.id.delete_tvSearch);
     }
+
 }

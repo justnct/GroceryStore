@@ -22,4 +22,5 @@
         app:itemTextColor="@color/custom_color_bottom_navi_view"
         app:labelVisibilityMode="selected"
         app:menu="@menu/menu_bottom_navi_view" />
+
 </RelativeLayout>

@@ -1,23 +1,21 @@
 package com.example.pj_grocerystore.model;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
-public class Product implements Parcelable {
+public class ProductTest implements Parcelable {
     private String name;
     private int price;
-    private int image;
     private int type;
-    public static int TYPE_VEGETABLES = 1;
-    public static int TYPE_MEAT = 2;
-    public static int TYPE_FLOWER = 3;
 
-    public Product(String name, int price, int image, int type) {
+    public ProductTest(String name, int price, int type) {
         this.name = name;
         this.price = price;
-        this.image = image;
         this.type = type;
+    }
+    public ProductTest(){
+
     }
 
     public String getName() {
@@ -36,14 +34,6 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
     public int getType() {
         return type;
     }
@@ -52,13 +42,12 @@ public class Product implements Parcelable {
         this.type = type;
     }
 
-
-    protected Product(Parcel in) {
+    protected ProductTest(Parcel in) {
         this.name = in.readString();
         this.price = in.readInt();
-        this.image = in.readInt();
         this.type = in.readInt();
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -68,19 +57,18 @@ public class Product implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeInt(price);
-        dest.writeInt(image);
         dest.writeInt(type);
     }
 
-    public static final Creator<Product> CREATOR = new Creator<Product>() {
+    public static final Creator<ProductTest> CREATOR = new Creator<ProductTest>() {
         @Override
-        public Product createFromParcel(Parcel source) {
-            return new Product(source);
+        public ProductTest createFromParcel(Parcel source) {
+            return new ProductTest(source);
         }
 
         @Override
-        public Product[] newArray(int size) {
-            return new Product[0];
+        public ProductTest[] newArray(int size) {
+            return new ProductTest[0];
         }
     };
 }
