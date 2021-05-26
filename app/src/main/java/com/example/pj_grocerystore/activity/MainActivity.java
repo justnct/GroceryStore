@@ -18,7 +18,9 @@ import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.adapter.ViewPagerAdapter_Navi_View_Bottom;
 import com.example.pj_grocerystore.animation_of_viewpager2.ZoomOutPageTransformer;
 import com.example.pj_grocerystore.model.Account;
+import com.example.pj_grocerystore.model.ListProductOfCustomer;
 import com.example.pj_grocerystore.shared_preference.DataLocalManager;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -92,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        BadgeDrawable badgeDrawable =  bottomNavigationView.getOrCreateBadge(R.id.navi_view_cart);
+        badgeDrawable.setVisible(true);
+        badgeDrawable.setNumber(ListProductOfCustomer.getDetailsProductList().size());
     }
 
 

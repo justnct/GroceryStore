@@ -32,24 +32,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
-    private ImageView haha;
     private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        getData();
+        checkData();
+//        checkData();
+//        getData();
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
-//                Intent intent = new Intent(SplashActivity.this, LogInActivity.class);
-//                startActivity(intent);
-//                finish();
+
 //            }
 //        }, 1000);
 
     }
+
+    private void checkData() {
+        if (!DataLocalManager.checkExitst("mListProduct")) {
+            Toast.makeText(this, "go", Toast.LENGTH_SHORT).show();
+            getData();
+        } else {
+            Intent intent = new Intent(SplashActivity.this, LogInActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     private void getData() { //get data product from firebase and img from firebase storage
         final ArrayList<ProductTest> mListProduct = new ArrayList<>();
         final ArrayList<Bitmap> mListBitmap = new ArrayList<>();
@@ -73,6 +84,8 @@ public class SplashActivity extends AppCompatActivity {
                                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                             Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                                             mListBitmap.add(bitmap);
+                                            Toast.makeText(SplashActivity.this, "List BIt" + mListBitmap.size(), Toast.LENGTH_SHORT).show();
+//                                            DataLocalManager.setListBitmap("mListBitmap", mListBitmap);
                                         }
                                     });
                         } catch (IOException e) {
@@ -82,8 +95,6 @@ public class SplashActivity extends AppCompatActivity {
                             while (true) {
                                 if (fileDownloadTask.isComplete()) {
                                     DataLocalManager.setListProductTEST("mListProduct", mListProduct);
-                                    DataLocalManager.setListBitmap("mListBitmap", mListBitmap);
-                                    Toast.makeText(SplashActivity.this, "list bit map " + mListBitmap.size(), Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(SplashActivity.this, LogInActivity.class);
                                     startActivity(intent);
                                     finish();

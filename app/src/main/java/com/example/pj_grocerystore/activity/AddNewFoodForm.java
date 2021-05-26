@@ -1,56 +1,41 @@
 package com.example.pj_grocerystore.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-
-import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.model.CustomToast;
 import com.example.pj_grocerystore.model.ProductTest;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-
-import gun0912.tedbottompicker.TedBottomPicker;
-import okhttp3.internal.Util;
 
 public class AddNewFoodForm extends AppCompatActivity {
     private EditText et_nameFood, et_priceFood, et_typeFood;
     private TextView tv_choiceImg;
     private ImageView img_imgFood;
     private Button btn_createFood;
-    private Bitmap bitmapTEST;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,103 +60,70 @@ public class AddNewFoodForm extends AppCompatActivity {
         tv_choiceImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestPermissions();
-//                openImagePicker();
+
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, 2);
             }
         });
 
         btn_createFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(et_nameFood.getText())
-                        && !TextUtils.isEmpty(et_priceFood.getText())
-                        && !TextUtils.isEmpty(et_typeFood.getText())  ){
-                    if(et_nameFood.getText().toString().length() < 3){
-                        CustomToast.customToast(AddNewFoodForm.this, "Tên phải trên 3 ký tự !!");
+                if (TextUtils.isEmpty(et_nameFood.getText())
+                        && TextUtils.isEmpty(et_priceFood.getText())
+                        && TextUtils.isEmpty(et_typeFood.getText())) {
+                    CustomToast.customToast(AddNewFoodForm.this, "Chưa nhập liệu");
+                } else {
+                    if (uri != null) {
+                        putToFirebase(uri);
                     } else {
-                        String nameFood = et_nameFood.getText().toString();
-                        int priceFood = Integer.parseInt(et_priceFood.getText().toString());
-                        int type = Integer.parseInt(et_typeFood.getText().toString());
-                        ProductTest p = new ProductTest(nameFood, priceFood, type);
-
-                        //put product to firebase
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Product");
-                        databaseReference.child(p.getName()).setValue(p);
-
-                        //put pic to firebase storage
-                        firebaseStorage = FirebaseStorage.getInstance();
-                        storageReference = firebaseStorage.getReference();
-                        StorageReference mountainImagesRef = storageReference.child("images/" + et_nameFood.getText().toString() + ".PNG");
-                        ProgressDialog progressDialog = new ProgressDialog(AddNewFoodForm.this);
-                        progressDialog.setTitle("Upload...");
-                        progressDialog.show();
-                        mountainImagesRef.putFile(getImageUri(AddNewFoodForm.this, bitmapTEST)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressDialog.dismiss();
-                                Snackbar.make(findViewById(android.R.id.content), "Save Done", Snackbar.LENGTH_LONG).show();
-                            }
-                        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                double progressPercent = (100.00 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                progressDialog.setMessage("Percentenge " + progressPercent);
-                            }
-                        });
+                        CustomToast.customToast(AddNewFoodForm.this, "Chưa lấy hình");
                     }
                 }
             }
         });
     }
 
-    private void requestPermissions() {
-        PermissionListener permissionlistener = new PermissionListener() {
+    private void putToFirebase(Uri uri) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/" + et_nameFood.getText().toString() + "." + getFileExtension(uri));
+        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onPermissionGranted() {
-                openImagePicker();
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        ProductTest productTest = new ProductTest(et_nameFood.getText().toString(),
+                                Integer.parseInt(et_priceFood.getText().toString()),
+                                Integer.parseInt(et_typeFood.getText().toString()), uri.toString());
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Product");
+                        databaseReference.child(et_nameFood.getText().toString()).setValue(productTest);
+                        Toast.makeText(AddNewFoodForm.this, "Success", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(AddNewFoodForm.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-            }
-        };
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
 
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.ACCESS_FINE_LOCATION)
-                .check();
+            }
+        });
     }
 
-    private void openImagePicker() {
-        TedBottomPicker.OnImageSelectedListener listener = new TedBottomPicker.OnImageSelectedListener() {
-            @Override
-            public void onImageSelected(Uri uri) {
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    img_imgFood.setVisibility(View.VISIBLE);
-                    img_imgFood.setImageBitmap(bitmap);
-                    bitmapTEST = bitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        TedBottomPicker tedBottomPicker = new TedBottomPicker.Builder(AddNewFoodForm.this)
-                .setOnImageSelectedListener(listener)
-                .create();
-        tedBottomPicker.show(getSupportFragmentManager());
-
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentProvider = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentProvider.getType(uri));
     }
 
-    //cast bitmap to uri
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
+            img_imgFood.setVisibility(View.VISIBLE);
+            uri = data.getData();
+            img_imgFood.setImageURI(data.getData());
+        }
     }
-
 }

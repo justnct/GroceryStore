@@ -23,7 +23,7 @@ public class DataLocalManager {
         instance = new DataLocalManager();
         instance.sharedPreference = new SharedPreference(context);
     }
-    public static DataLocalManager getInstance(){
+    private static DataLocalManager getInstance(){
         if (instance == null){
             instance = new DataLocalManager();
         }

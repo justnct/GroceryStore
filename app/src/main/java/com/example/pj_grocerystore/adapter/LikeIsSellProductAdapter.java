@@ -1,5 +1,6 @@
 package com.example.pj_grocerystore.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.pj_grocerystore.R;
 import com.example.pj_grocerystore.activity.ProductDetails;
 import com.example.pj_grocerystore.model.FormatNumber;
@@ -21,11 +23,11 @@ import java.util.ArrayList;
 
 public class LikeIsSellProductAdapter extends RecyclerView.Adapter<LikeIsSellProductAdapter.LikeIsSellViewHolder> {
     private ArrayList<ProductTest> mListProduct;
-    private ArrayList<Bitmap> mListBitamp;
+    private Context context;
 
-    public LikeIsSellProductAdapter(ArrayList<ProductTest> mListProduct, ArrayList<Bitmap> mListBitamp) {
+    public LikeIsSellProductAdapter(ArrayList<ProductTest> mListProduct, Context context) {
         this.mListProduct = mListProduct;
-        this.mListBitamp = mListBitamp;
+        this.context = context;
     }
 
     @NonNull
@@ -39,14 +41,13 @@ public class LikeIsSellProductAdapter extends RecyclerView.Adapter<LikeIsSellPro
     public void onBindViewHolder(@NonNull LikeIsSellViewHolder holder, int position) {
         ProductTest productTest = mListProduct.get(position);
         holder.tv_nameProduct.setText(productTest.getName());
-        holder.img_product.setImageBitmap(mListBitamp.get(position));
+        Glide.with(context).load(mListProduct.get(position).getImgURL()).into(holder.img_product);
         holder.tv_priceProduct.setText(FormatNumber.formatNumber(productTest.getPrice()));
         holder.main_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ProductDetails.class);
                 intent.putExtra("productLike", productTest);
-                intent.putExtra("productImageLike", mListBitamp.get(position));
                 intent.putExtra("positionLike", position);
                 v.getContext().startActivity(intent);
             }

@@ -8,14 +8,16 @@ public class ProductTest implements Parcelable {
     private String name;
     private int price;
     private int type;
+    private String imgURL;
 
-    public ProductTest(String name, int price, int type) {
+    public ProductTest(String name, int price, int type, String imgURL) {
         this.name = name;
         this.price = price;
         this.type = type;
+        this.imgURL = imgURL;
     }
-    public ProductTest(){
 
+    public ProductTest() {
     }
 
     public String getName() {
@@ -38,6 +40,14 @@ public class ProductTest implements Parcelable {
         return type;
     }
 
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
     public void setType(int type) {
         this.type = type;
     }
@@ -46,6 +56,7 @@ public class ProductTest implements Parcelable {
         this.name = in.readString();
         this.price = in.readInt();
         this.type = in.readInt();
+        this.imgURL = in.readString();
     }
 
     @Override
@@ -58,6 +69,7 @@ public class ProductTest implements Parcelable {
         dest.writeString(name);
         dest.writeInt(price);
         dest.writeInt(type);
+        dest.writeString(imgURL);
     }
 
     public static final Creator<ProductTest> CREATOR = new Creator<ProductTest>() {

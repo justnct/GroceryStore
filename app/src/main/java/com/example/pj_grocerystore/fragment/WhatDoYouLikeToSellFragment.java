@@ -35,6 +35,7 @@ import java.util.ArrayList;
 public class WhatDoYouLikeToSellFragment extends Fragment {
     private RecyclerView recyclerView;
     private LikeIsSellProductAdapter likeIsSellProductAdapter;
+    private ArrayList<ProductTest> mListProductTest;
 
     public WhatDoYouLikeToSellFragment() {
         // Required empty public constructor
@@ -46,17 +47,38 @@ public class WhatDoYouLikeToSellFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_what_do_you_like_to_sell, container, false);
         addUI(view);
-        likeIsSellProductAdapter = new LikeIsSellProductAdapter(DataLocalManager.getListProductTEST("mListProduct"),
-                DataLocalManager.getListBitmap("mListBitmap"));
-        recyclerView.setAdapter(likeIsSellProductAdapter);
+        getListProduct();
 
         return view;
+    }
+
+    private void getListProduct() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Product");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    ProductTest productTest = dataSnapshot.getValue(ProductTest.class);
+                    mListProductTest.add(productTest);
+                }
+//                Toast.makeText(getActivity(), "size " + mListProductTest.size() , Toast.LENGTH_SHORT).show();
+                likeIsSellProductAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void addUI(View view) {
         recyclerView = view.findViewById(R.id.rv_likeIsSell);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
+        mListProductTest = new ArrayList<>();
+        likeIsSellProductAdapter = new LikeIsSellProductAdapter(mListProductTest, getContext());
+        recyclerView.setAdapter(likeIsSellProductAdapter);
     }
 
 

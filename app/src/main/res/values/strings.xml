@@ -56,5 +56,7 @@
     <string name="total_product">Total: </string>
     <string name="pay">PAY</string>
     <string name="list_product_of_customer">List Product</string>
+    <string name="food">FOOD</string>
+    <string name="user">USER</string>
 
 </resources>
