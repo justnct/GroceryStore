@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 public class AddNewFoodForm extends AppCompatActivity {
@@ -74,12 +75,12 @@ public class AddNewFoodForm extends AppCompatActivity {
                 if (TextUtils.isEmpty(et_nameFood.getText())
                         && TextUtils.isEmpty(et_priceFood.getText())
                         && TextUtils.isEmpty(et_typeFood.getText())) {
-                    CustomToast.customToast(AddNewFoodForm.this, "Chưa nhập liệu");
+                    CustomToast.customToast(AddNewFoodForm.this, "Bạn nhập thiếu các dữ liệu");
                 } else {
                     if (uri != null) {
                         putToFirebase(uri);
                     } else {
-                        CustomToast.customToast(AddNewFoodForm.this, "Chưa lấy hình");
+                        CustomToast.customToast(AddNewFoodForm.this, "Bạn chưa chọn hình");
                     }
                 }
             }
@@ -88,7 +89,7 @@ public class AddNewFoodForm extends AppCompatActivity {
 
     private void putToFirebase(Uri uri) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("images/" + et_nameFood.getText().toString() + "." + getFileExtension(uri));
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final StorageTask<UploadTask.TaskSnapshot> taskSnapshotStorageTask = storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -102,11 +103,6 @@ public class AddNewFoodForm extends AppCompatActivity {
                         Toast.makeText(AddNewFoodForm.this, "Success", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-
             }
         });
     }

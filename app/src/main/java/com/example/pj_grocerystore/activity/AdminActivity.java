@@ -58,6 +58,17 @@ public class AdminActivity extends AppCompatActivity {
 
     private int getCountFood() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Product");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                badgeDrawableUser.setNumber(getCountUser());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         return 0;
     }
 
